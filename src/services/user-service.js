@@ -24,7 +24,27 @@ class UserService {
       const user = await this.userRepository.getById(userId);
       return user;
     } catch (error) {
-      console.log("Something went wront in the service layer");
+      console.log("Something went wrong in the service layer");
+      throw error;
+    }
+  }
+
+  async signIn(email, plainPassword) {
+    try {
+      //Step1-> Fetch user using the email
+      const user = await this.userRepository.getByEmail(email);
+      //Step2-> Compare the plain password with encrypted password
+      const passwordMatch = this.checkPassword(plainPassword, user.password);
+
+      if (!passwordMatch) {
+        console.log("Password doesn't match");
+        throw { error: " Incorrect Password" };
+      }
+      //Step3-> If password match create a jwt token and return token back to the user
+      const jwtToken = this.createToken({ id: user.id, email: user.email });
+      return jwtToken;
+    } catch (error) {
+      console.log("Something went wrong while sign in");
       throw error;
     }
   }
@@ -51,7 +71,7 @@ class UserService {
 
   async checkPassword(userInputPlainPassword, encryptedPassword) {
     try {
-      bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
+      return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
     } catch (error) {
       console.log("Something went wrong while comparing the password", error);
       throw error;
