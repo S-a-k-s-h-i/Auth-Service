@@ -11,9 +11,11 @@ class UserRepository {
     }
   }
 
-  async get(userId) {
+  async getById(userId) {
     try {
-      const user = await User.findByPk(userId);
+      const user = await User.findByPk(userId, {
+        attributes: ["id", "email"],
+      });
       return user;
     } catch (error) {
       console.log("Something went wrong at the repository layer");
