@@ -15,11 +15,11 @@ const create = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.statusCode).json({
       data: {},
       success: false,
-      message: "Failed to create a user",
-      err: error,
+      message: error.message,
+      err: error.explanation,
     });
   }
 };
@@ -37,11 +37,11 @@ const signIn = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.statusCode).json({
       data: {},
       success: false,
-      message: "Failed to create a user",
-      err: error,
+      message: error.message,
+      err: error.explanation,
     });
   }
 };
