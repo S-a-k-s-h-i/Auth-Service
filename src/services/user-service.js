@@ -62,6 +62,16 @@ class UserService {
     }
   }
 
+  async isAdmin(userId) {
+    try {
+      const response = this.userRepository.isAdmin(userId);
+      return response;
+    } catch (error) {
+      console.log("Something went wrong in checking the user has admin role");
+      throw error;
+    }
+  }
+
   async createToken(user) {
     try {
       const token = jwt.sign(user, JWT_KEY, { expiresIn: "1d" });
