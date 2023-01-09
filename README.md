@@ -1,10 +1,11 @@
 # Auth Service
 
 This micro-service mainly focuses on the authorization and authentication of the users.
-`Authentication`: It is a process by which we can uniquely identify users on our application. This process tells about who the user is.
 
-`Authorization`: It is a process by which we can identify the capabilities of a user i.e what a user can do in our application.
-Eg, we use Flipkart so when logging in as a normal user you have different access and when you log in as a seller it's different, a seller can sell the products on the app, not the normal user.
+- `Authentication`: It is a process by which we can uniquely identify users on our application. This process tells about who the user is.
+
+- `Authorization`: It is a process by which we can identify the capabilities of a user i.e what a user can do in our application.
+  Eg, we use Flipkart so when logging in as a normal user you have different access and when you log in as a seller it's different, a seller can sell the products on the app, not the normal user.
 
 ---
 
