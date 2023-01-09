@@ -8,8 +8,6 @@ This micro-service mainly focuses on the authorization and authentication of the
 
 For development, you will need Node.js and a node global package, npm, installed in your environement.
 
----
-
 ## Install
 
     $ git clone https://github.com/S-a-k-s-h-i/Auth-Service.git
@@ -18,4 +16,4 @@ For development, you will need Node.js and a node global package, npm, installed
 
 ## Running the app
 
-$ npm start
+    $ npm start
