@@ -1,31 +1,37 @@
-const ValidationError = require("../utils/validation-error");
+const {
+  ValidationError,
+  AttributeNotFound,
+} = require("../utils/errorHandlers/clientErrors/index");
 const { User, Role } = require("../models/index");
-const ClientError = require("../utils/client-error");
-const { StatusCodes } = require("http-status-codes");
+const AppError = require("../utils/errorHandlers/app-error");
 
 class UserRepository {
   async create(data) {
     try {
       const user = await User.create(data);
+      delete user.password;
       return user;
     } catch (error) {
       if (error.name == "SequelizeValidationError") {
         throw new ValidationError(error);
       }
-      console.log("Something went wrong at the repository layer");
-      throw error;
+      throw new AppError("user", "create");
     }
   }
 
   async getById(userId) {
     try {
+      console.log(userId);
       const user = await User.findByPk(userId, {
         attributes: ["id", "email"],
       });
+      console.log("user-----", user);
+      if (!user) {
+        throw new AttributeNotFound("userId");
+      }
       return user;
     } catch (error) {
-      console.log("Something went wrong at the repository layer");
-      throw error;
+      throw new AppError("user", "fetch");
     }
   }
 
@@ -37,17 +43,11 @@ class UserRepository {
         },
       });
       if (!user) {
-        throw new ClientError(
-          "AttributeNotFound",
-          "Invalid email sent in the request",
-          "Please check the email as there is no record of email",
-          StatusCodes.NOT_FOUND
-        );
+        throw new AttributeNotFound("email");
       }
       return user;
     } catch (error) {
-      console.log("Something went wrong at the repository layer");
-      throw error;
+      throw new AppError("user", "fetch");
     }
   }
 
@@ -61,8 +61,7 @@ class UserRepository {
       });
       return await user.hasRole(adminRole);
     } catch (error) {
-      console.log("Something went wrong at the repository layer");
-      throw error;
+      throw new AppError("role", "check");
     }
   }
 
@@ -75,8 +74,7 @@ class UserRepository {
       });
       return user;
     } catch (error) {
-      console.log("Something went wrong at the repository layer");
-      throw error;
+      throw new AppError("user", "update");
     }
   }
 
@@ -89,8 +87,7 @@ class UserRepository {
       });
       return true;
     } catch (error) {
-      console.log("Something went wrong at the repository layer");
-      throw error;
+      throw new AppError("user", "delete");
     }
   }
 }

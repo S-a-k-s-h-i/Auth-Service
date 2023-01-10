@@ -1,16 +1,16 @@
 const { StatusCodes } = require("http-status-codes");
-const AppErrors = require("../errorHandler");
+const AppError = require("../app-error");
 
-class PasswordMismatch extends AppErrors {
+class PasswordMismatchError extends AppError {
   constructor() {
     let error = {
       name: "PasswordMismatchError",
-      message: "Password not Matching, plz try again",
-      explanation: "Incorrect Password Enterred",
+      message: "Password not Matching, please try again",
+      explanation: "Incorrect Password Entered",
       statusCode: StatusCodes.FORBIDDEN,
     };
     super(error.name, error.message, error.explanation, error.statusCode);
   }
 }
 
-module.exports = PasswordMismatch;
+module.exports = PasswordMismatchError;

@@ -1,11 +1,11 @@
 const { StatusCodes } = require("http-status-codes");
-const AppErrors = require("../errorHandler");
+const AppError = require("../app-error");
 
-class TokenVerification extends AppErrors {
+class TokenVerificationError extends AppError {
   constructor() {
     let error = {
       name: "TokenVerificationError",
-      message: "Token not Matching, plz try again",
+      message: "Invalid Token",
       explanation: "Incorrect Token Provided",
       statusCode: StatusCodes.FORBIDDEN,
     };
@@ -13,4 +13,4 @@ class TokenVerification extends AppErrors {
   }
 }
 
-module.exports = TokenVerification;
+module.exports = TokenVerificationError;

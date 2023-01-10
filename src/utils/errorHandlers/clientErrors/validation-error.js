@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 
-const AppError = require("../error-handlers");
+const AppError = require("../app-error");
 
 class ValidationError extends AppError {
   constructor(error) {

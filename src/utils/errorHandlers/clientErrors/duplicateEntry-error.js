@@ -1,7 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
-const AppErrors = require("../errorHandler");
+const AppError = require("../app-error");
 
-class DuplicateEntry extends AppErrors {
+class DuplicateEntry extends AppError {
   constructor(error) {
     let errorName = error.name;
 
