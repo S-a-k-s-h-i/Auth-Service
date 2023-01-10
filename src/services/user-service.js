@@ -60,14 +60,15 @@ class UserService {
   async isAuthenticated(token) {
     try {
       const response = this.verifyToken(token);
-      console.log("response---------", response);
-      console.log("response id---------", response.id);
       if (!response) throw new TokenVerificationError();
       const user = await this.userRepository.getById(response.id);
       if (!user) throw new TokenVerificationError();
       return user.id;
     } catch (error) {
-      if (error.name == "AttributeNotFound" || error.name == "RepositoryError")
+      if (
+        error.name == "AttributeNotFound" ||
+        error.name == "TokenVerificationError"
+      )
         throw error;
       throw new ServiceError();
     }
@@ -93,7 +94,7 @@ class UserService {
     }
   }
 
-  async verifyToken(token) {
+  verifyToken(token) {
     try {
       const result = jwt.verify(token, JWT_KEY);
       return result;
