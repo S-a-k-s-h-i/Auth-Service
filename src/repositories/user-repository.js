@@ -12,10 +12,12 @@ class UserRepository {
       delete user.password;
       return user;
     } catch (error) {
-      if (error.name == "SequelizeValidationError") {
-        throw new ValidationError(error);
-      }
-      throw new AppError("user", "create");
+      // if (error.name == "SequelizeValidationError") {
+      //   throw new ValidationError(error);
+      // }
+      // throw new AppError("user", "create");
+      console.log(error);
+      throw error;
     }
   }
 
