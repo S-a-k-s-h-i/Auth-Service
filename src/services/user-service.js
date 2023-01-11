@@ -60,16 +60,20 @@ class UserService {
   async isAuthenticated(token) {
     try {
       const response = this.verifyToken(token);
-      if (!response) throw new TokenVerificationError();
+      if (!response) {
+        throw new TokenVerificationError();
+      }
       const user = await this.userRepository.getById(response.id);
-      if (!user) throw new TokenVerificationError();
+      if (!user) {
+        throw new TokenVerificationError();
+      }
       return user.id;
     } catch (error) {
+      console.log("**********************************",error.name);
       if (
         error.name == "AttributeNotFound" ||
         error.name == "TokenVerificationError"
-      )
-        throw error;
+      ){throw error;}
       throw new ServiceError();
     }
   }
